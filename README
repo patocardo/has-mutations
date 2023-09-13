@@ -1,86 +1,94 @@
-# DNA Mutation Detector
+# DNA Mutations Detector
 
-This project provides an API to detect mutations in DNA sequences. Mutations are identified if more than one sequence of four identical letters is found obliquely, horizontally, or vertically.
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Running Locally](#running-locally)
-- [Deploying to Render](#deploying-to-render)
-- [Running Automated Tests](#running-automated-tests)
-- [API Usage](#api-usage)
-- [Contributing](#contributing)
+This project provides an API to detect genetic mutations based on a DNA sequence.
 
 ## Installation
 
-1. Clone the repository:
+### Prerequisites
 
-```bash
-git clone https://github.com/your-username/dna-mutation-detector.git
-```
+- Node.js
+- npm
 
-2. Navigate to the project directory:
+### Steps
 
-```bash
-cd dna-mutation-detector
-```
+1. **Clone the repository**:
 
-3. Install the required dependencies:
+   ```bash
+   git clone https://github.com/patocardo/has-mutations.git
+   ```
 
-```bash
-npm install
-```
+2. **Navigate to the project directory**:
 
-## Running Locally
+   ```bash
+   cd has-mutations
+   ```
 
-To run the project locally, use the following command:
+3. **Install dependencies**:
 
-```bash
-npm start
-```
+   ```bash
+   npm install
+   ```
 
-The server will start, and you can access the API at `http://localhost:3000`.
+4. **Start the server**:
 
-## Deploying to Render
+   ```bash
+   npm start
+   ```
 
-1. Fork this repository on GitHub.
-2. Create a new Web Service on [Render](https://dashboard.render.com/create?type=web).
-3. Grant Render permission to access your new repository.
-4. Select the repository from the Render dashboard.
-5. Use the following values during creation:
+The server should now be running locally on port 3000.
 
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
+## Running Tests
 
-6. Click on 'Save Web Service'. Render will pull the repository, install the necessary dependencies, and deploy the project. You'll receive a live URL to access the API.
-
-## Running Automated Tests
-
-To run the automated tests, use the following command:
+To run the tests, simply execute:
 
 ```bash
 npm test
 ```
 
-This will execute all the tests in the `tests/` directory and provide a summary of the results.
+## Making Requests to the Live API
 
-## API Usage
+You can make requests to the live API hosted at `https://dnamutations.onrender.com`.
 
-### Check for DNA Mutation
+### Using `curl` (Unix):
 
-**Endpoint**: `POST /mutation/`
+#### Without mutations:
 
-**Payload**:
-
-```json
-{
-    "dna": ["ATGCGA", "CAGTGC", ...]
-}
+```bash
+curl -X POST https://dnamutations.onrender.com/mutation/ -H "Content-Type: application/json" -d '{"dna":["ATGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}'
 ```
 
-**Responses**:
+#### With mutations:
 
-- `200 OK`: Mutation detected.
-- `403 Forbidden`: No mutation detected.
-- `400 Bad Request`: Invalid DNA input or base.
+```bash
+curl -X POST https://dnamutations.onrender.com/mutation/ -H "Content-Type: application/json" -d '{"dna":["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]}'
+```
 
+### Using PowerShell (Windows):
+
+#### Without mutations:
+
+```powershell
+Invoke-RestMethod -Uri https://dnamutations.onrender.com/mutation/ -Method POST -Body '{"dna":["ATGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}' -Headers @{"Content-Type"="application/json"}
+```
+
+**Expected result**
+
+```powershell
+hasMutation
+-----------
+      False
+```
+
+### With mutations:
+
+```powershell
+Invoke-RestMethod -Uri https://dnamutations.onrender.com/mutation/ -Method POST -Body '{"dna":["ATGCGA","CAGTGC","TTATGT","AGAAGG","CCCCTA","TCACTG"]}' -Headers @{"Content-Type"="application/json"}
+```
+
+**Expected result**
+
+```powershell
+hasMutation
+-----------
+      True
+```
