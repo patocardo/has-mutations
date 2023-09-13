@@ -4,6 +4,7 @@
   "description": "code challenge for full-stack developer position",
   "main": "index.js",
   "scripts": {
+    "build": "npm install",
     "start": "node src/index.js",
     "test": "jest"
   },
