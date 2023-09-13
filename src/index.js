@@ -1,0 +1,20 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const mutationController = require('./mutations/controller');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware to parse JSON requests
+app.use(bodyParser.json());
+
+/**
+ * Endpoint to check for DNA mutation
+ */
+app.post('/mutation/', mutationController);
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+module.exports = app;  // Exporting for testing purposes
